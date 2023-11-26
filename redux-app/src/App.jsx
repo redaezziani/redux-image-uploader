@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 function App() {
   const images = useSelector(state => state.images);
-
+  const [open , setOpen] = useState(false);
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
 
@@ -42,9 +42,43 @@ function App() {
     e.preventDefault();
   }
 
+  const toggleIsOpen = () => {
+    setOpen(!open);
+  }
+
+  const handleOpen = (image) => {
+    toggleIsOpen();
+    setImage(image);
+  }
+
+
+
 
   return (
     <div className="w-full relative  justify-star items-center min-h-screen flex flex-col gap-2 overflow-hidden">
+      <div
+       className={`w-full h-screen  fixed z-50 bg-slate-900/5 backdrop-blur-md ${open ? 'block' : 'hidden'}`}
+      >
+        <div className="w-full h-full flex justify-center items-center">
+          <div className="w-96 h-96 bg-white rounded-md flex flex-col justify-center items-center gap-4">
+            <h1 className='text-2xl font-bold'>Image Gallery</h1>
+            <motion.div
+            className="w-full h-full flex justify-center items-center">
+              <img
+                src={image}
+                onDragStart={disapleSelect}
+                className='w-full h-full object-cover rounded-xl'
+              />
+            </motion.div>
+            <button
+              onClick={() => setOpen(false)}
+              className='bg-sky-600 text-white px-4 py-2 rounded-lg'
+            >
+              Close
+            </button>
+          </div>
+          </div>
+      </div>
       <h1
         className='text-4xl text-center font-bold'
       >
@@ -70,7 +104,7 @@ function App() {
         </div>
         <button
           onClick={handleUpload}
-          className='bg-sky-600 text-white px-4 py-2 rounded-md'
+          className='bg-sky-600 text-white px-4 py-2 rounded-lg'
         >
           Upload
         </button>
@@ -84,18 +118,19 @@ function App() {
             images.map((image, index) => {
               return (
                 <motion.div
+                  onClick={() => handleOpen(image)}
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.5 }}
                   key={index}
                   layout
-                  className={`w-full col-span-1 relative cursor-pointer top-3 aspect-square rounded-md border border-slate-600/10 flex justify-start items-center overflow-hidden z-${index}`}
+                  className={`w-full col-span-1 relative cursor-pointer top-3 aspect-square rounded-xl border border-slate-600/10 flex justify-start items-center overflow-hidden z-${index}`}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => removeImageHandler(image)}
-                    className='absolute top-2 right-2 w-8 h-8 flex justify-center items-center rounded-full bg-gray-100/40 text-white hover:text-sky-500 cursor-pointer transition-all ease-in-out duration-300'
+                    className='absolute top-2 right-2 w-8 h-8 flex justify-center items-center rounded-full bg-gray-900/10 text-white hover:text-sky-500 cursor-pointer transition-all ease-in-out duration-300'
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
