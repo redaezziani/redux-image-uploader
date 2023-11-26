@@ -1,5 +1,5 @@
 # Redux Image Gallery
-
+<img src="./image-readme/web-site.png" alt="web-site-prev"/><br/>
 ## Description
 
 Redux Image Gallery is a web application for showcasing and managing a collection of images. It uses Redux for state management.
