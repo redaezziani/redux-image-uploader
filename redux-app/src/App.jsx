@@ -48,7 +48,7 @@ function App() {
       <h1
         className='text-4xl text-center font-bold'
       >
-        Redux Image Uploader
+        Redux Image Gallery
       </h1>
       <hr
         className='w-96 relative   border border-slate-400/10'
@@ -76,7 +76,7 @@ function App() {
         </button>
 
       </div>
-      <div className="w-96 mt-20 justify-center items-center relative flex-col-reverse  gap-3 flex   ">
+      <div className=" w-full px-4 md:px-0 md:w-[800px] grid grid-cols-2 md:grid-cols-3  mt-20 justify-center items-center relative flex-col-reverse  gap-3    ">
         <AnimatePresence
 
         >
@@ -89,13 +89,7 @@ function App() {
                   exit={{ opacity: 0, scale: 0.5 }}
                   key={index}
                   layout
-                  drag={true}
-                  dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                  dragElastic={0.5}
-                  dragMomentum={true}
-                  dragTransition={{ bounceStiffness: 600, bounceDamping: 10 }}
-                  
-                  className={`w-full cursor-pointer top-3 absolute h-96 rounded-md border border-slate-600/10 flex justify-start items-center overflow-hidden z-${index}`}
+                  className={`w-full col-span-1 relative cursor-pointer top-3 aspect-square rounded-md border border-slate-600/10 flex justify-start items-center overflow-hidden z-${index}`}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1 }}
