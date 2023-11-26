@@ -22,21 +22,26 @@ function App() {
     const formData = new FormData();
     formData.append('image', image);
     fetch('http://localhost:3000/upload', {
-  method: 'POST',
-  body: formData
-}).then(res => res.json())
-  .then(data => {
-    const {imagePath} = data;
-    const getNewPath = imagePath.replace('../redux-app/public/', '')
-    dispatch(addImage(getNewPath));
+      method: 'POST',
+      body: formData
+    }).then(res => res.json())
+      .then(data => {
+        const { imagePath } = data;
+        const getNewPath = imagePath.replace('../redux-app/public/', '')
+        dispatch(addImage(getNewPath));
 
-})
+      })
 
   }
 
-const removeImageHandler = (image) => {
-  dispatch(removeImage(image))
-}
+  const removeImageHandler = (image) => {
+    dispatch(removeImage(image))
+  }
+
+  const disapleSelect = (e) => {
+    e.preventDefault();
+  }
+
 
   return (
     <div className="w-full relative  justify-star items-center min-h-screen flex flex-col gap-2 overflow-hidden">
@@ -56,11 +61,11 @@ const removeImageHandler = (image) => {
             </svg>
           </label>
           <input
-  id='file'
-  onChange={handleImage}
-  className='absolute w-full h-full opacity-0 cursor-pointer'
-  type="file"
-/>
+            id='file'
+            onChange={handleImage}
+            className='absolute w-full h-full opacity-0 cursor-pointer'
+            type="file"
+          />
 
         </div>
         <button
@@ -71,7 +76,7 @@ const removeImageHandler = (image) => {
         </button>
 
       </div>
-      <div className="w-96 mt-20 flex-col-reverse  gap-3 flex   ">
+      <div className="w-96 mt-20 justify-center items-center relative flex-col-reverse  gap-3 flex   ">
         <AnimatePresence
 
         >
@@ -80,11 +85,17 @@ const removeImageHandler = (image) => {
               return (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1 , scale: 1}}
-                  exit={{ opacity: 0 , scale: 0.5}}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
                   key={index}
                   layout
-                  className='w-full relative h-96 rounded-md border border-slate-600/10 flex justify-start items-center'
+                  drag={true}
+                  dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                  dragElastic={0.5}
+                  dragMomentum={true}
+                  dragTransition={{ bounceStiffness: 600, bounceDamping: 10 }}
+                  
+                  className={`w-full cursor-pointer top-3 absolute h-96 rounded-md border border-slate-600/10 flex justify-start items-center overflow-hidden z-${index}`}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1 }}
@@ -97,6 +108,7 @@ const removeImageHandler = (image) => {
                     </svg>
                   </motion.div>
                   <img
+                    onDragStart={disapleSelect}
                     src={image}
                     className='w-full h-full object-cover rounded-md'
                   />
