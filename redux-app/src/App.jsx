@@ -87,7 +87,7 @@ function App() {
       <hr
         className='w-96 relative   border border-slate-400/10'
       />
-      <div className=' absolute justify-between items-center bottom-8 w-96 rounded-md   flex'>
+      <div className=' absolute z-20 rounded-xl bg-slate-900/10 justify-between items-center bottom-8 w-96 p-4   flex'>
         <div className="w-8 h-8 flex relative rounded-full border border-slate-300 justify-center items-center ">
           <label htmlFor="file">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
